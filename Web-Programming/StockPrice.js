@@ -5,12 +5,21 @@ const jsdom = require('jsdom')
 async function getStockPrice (stockSymbol) {
   // parsing the html page body
   const url = `https://in.finance.yahoo.com/lookup?s=$${stockSymbol}`
+  let yahooStockData = getYahooStockData(url);
+  return getPrice(yahooStockData);
+  
+}
+  
+function getYahooStockData(url) {
   const response = await fetch(url)
   const pageBody = await response.text()
-  const dom = new jsdom.JSDOM(pageBody, 'text/html')
-  // returning the price as a number
-  return parseFloat(dom.window.document.querySelectorAll('td')[2].textContent.replace(/,/g, ''))
+  const yahooStockData = new jsdom.JSDOM(pageBody, 'text/html')
+  return yahooStockData;
 }
+
+ function getPrice(yahooStockData) {
+   return parseFloat(yahooStockData.window.document.querySelectorAll('td')[2].textContent.replace(/,/g, ''))
+ }
 
 async function main () {
   // Using async await to ensure synchronous behaviour
