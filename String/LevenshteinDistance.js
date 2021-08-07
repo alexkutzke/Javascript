@@ -7,6 +7,7 @@ string a).
 The smaller the Levenshtein distance,
 the more similar the strings are. This is a very
 common problem in the application of Dynamic Programming.
+Mais um comentário
 */
 
 const levenshteinDistance = (a, b) => {
