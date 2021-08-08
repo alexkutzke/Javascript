@@ -3,11 +3,11 @@
 // Search the integer inside the sorted integers array using Binary Search Algorithm
 
 const BinarySearch = (intArr, searchQuery) => {
-  if (searchQuery === null || searchQuery === undefined || intArr.length === 0) {
+  if ( searchQueryIsInvalid(searchQuery) || intArrIsEmpty(intArr)) {
     return false
   }
 
-  const middleIndex = intArr.length === 1 ? 0 : Math.ceil(intArr.length / 2)
+  const middleIndex = getMiddleIndex(intArr);
 
   if (intArr[middleIndex] === searchQuery) {
     return true
@@ -27,3 +27,15 @@ const BinarySearch = (intArr, searchQuery) => {
   console.log('Undefined number search query = ', BinarySearch([1, 2, 3, 4, 5]))
   console.log('With Empty array = ', BinarySearch([], 1))
 })()
+
+function searchQueryIsInvalid(searchQuery){
+  return searchQuery === null || searchQuery === undefined;
+}
+
+function intArrIsEmpty(intArr){
+  return intArr.length === 0;
+}
+
+function getMiddleIndex(intArr){
+  return intArr.length === 1 ? 0 : Math.ceil(intArr.length / 2);
+}
