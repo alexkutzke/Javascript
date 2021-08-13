@@ -3,19 +3,36 @@
   Example: input = "hello world" return 3
  */
 
-const checkVowels = (value) => {
-  if (typeof value !== 'string') {
-    throw new TypeError('The first param should be a string')
-  }
-  const vowels = ['a', 'e', 'i', 'o', 'u']
-  let countVowels = 0
-  for (let i = 0; i < value.length; i++) {
-    const char = value[i].toLowerCase()
-    if (vowels.includes(char)) {
-      countVowels++
-    }
-  }
-  return countVowels
+
+const countVowels = (string) => {
+    validateString(string)
+    vowels = getVowelsAmount(string)
+  return vowels
 }
 
-export { checkVowels }
+
+function validateString(string){
+  if (typeof string !== 'string') {
+    throw new TypeError('The first param should be a string')
+  }    
+}
+
+
+function getVowelsAmount(string){
+
+    const vowels = ['a', 'e', 'i', 'o', 'u']
+    
+    let vowelsAmount = 0
+    
+    for (let i = 0; i < string.length; i++) {
+	
+	const letter = string[i].toLowerCase()
+	if (vowels.includes(letter)) {
+	    vowelsAmount++
+	}
+    }
+    return vowelsAmount
+}    
+
+
+export { countVowels }
