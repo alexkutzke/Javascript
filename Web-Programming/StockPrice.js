@@ -1,30 +1,42 @@
 const fetch = require('node-fetch')
 const jsdom = require('jsdom')
+const { isArray } = require('util')
 
-// function to get the stock price from the given symbol
-async function getStockPrice (stockSymbol) {
-  // parsing the html page body
-  const url = `https://in.finance.yahoo.com/lookup?s=$${stockSymbol}`
-  const response = await fetch(url)
-  const pageBody = await response.text()
+const STOCK_SYMBOLS = ['GOOGL', 'AAPL', 'MSFT', 'AMZN']
+
+async function fetchtStockPrices(stockSymbols) {
+  if (!isArray(stockSymbols)) return
+  const results = stockSymbols.map(async (symbol) =>
+    fetch(`https://in.finance.yahoo.com/lookup?s=$${symbol}`)
+  )
+  return await Promise.all(results)
+}
+
+function formatCoinAndPrint(synbolResponse) {
+  if (!isArray(synbolResponse)) return
+  synbolResponse.map(async (pageBodyResponse) => {
+    const pageBody = await pageBodyResponse.text()
+    const stock = getDataOnBodyTextResponse(pageBody, 0)
+    const price = getDataOnBodyTextResponse(pageBody, 2)
+    return console.log(`${String(stock)} stock price: $ ${parseFloat(price)}`)
+  })
+}
+
+function getDataOnBodyTextResponse(pageBody, arrayPositionIndex) {
   const dom = new jsdom.JSDOM(pageBody, 'text/html')
-  // returning the price as a number
-  return parseFloat(dom.window.document.querySelectorAll('td')[2].textContent.replace(/,/g, ''))
+  return dom.window.document
+    .querySelectorAll('td')
+    [arrayPositionIndex].textContent.replace(/,/g, '')
 }
 
-async function main () {
-  // Using async await to ensure synchronous behaviour
-  await getStockPrice('GOOGL')
-    .then(response => console.log(`GOOGL stock price: $ ${response}`))
-
-  await getStockPrice('AAPL')
-    .then(response => console.log(`AAPL stock price: $ ${response}`))
-
-  await getStockPrice('MSFT')
-    .then(response => console.log(`MSFT stock price: $ ${response}`))
-
-  await getStockPrice('AMZN')
-    .then(response => console.log(`AMZN stock price: $ ${response}`))
+async function main() {
+  await fetchtStockPrices(STOCK_SYMBOLS).then((stocksReturned) =>
+    formatCoinAndPrint(stocksReturned)
+  )
 }
 
-main()
+try {
+  main()
+} catch (error) {
+  console.error('Error: ', error)
+}
