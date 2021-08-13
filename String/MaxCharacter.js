@@ -2,28 +2,61 @@
   Given a string of characters, return the character that appears the most often.
   Example: input = "Hello World!" return "l"
 */
-const maxCharacter = (value) => {
-  if (typeof value !== 'string') {
-    throw new TypeError('The param should be a string')
-  } else if (!value) {
+const maxCharacter = (characters) => {
+  validateString(characters)
+
+  const charOccurrences = getOccurrencesPerChar(characters)
+  const maxChar = getCharWithMoreOccurrences(charOccurrences)
+
+  return maxChar
+}
+
+function validateString(characters) {
+  if (!characters) {
     throw new Error('The param should be a valid string')
   }
 
-  const occurrences = {}
-  for (let i = 0; i < value.length; i++) {
-    const char = value[i]
-    if (/\s/.test(char)) continue
-    occurrences[char] = occurrences[char] + 1 || 1
+  if (!isString(characters)) {
+    throw new TypeError('The param should be a string')
   }
-  let maxCharacter = null
-  let maxCount = 0
-  Object.keys(occurrences).forEach(char => {
-    if (occurrences[char] > maxCount) {
-      maxCount = occurrences[char]
-      maxCharacter = char
+}
+
+function isString(characters) {
+  return typeof characters === 'string'
+}
+
+function getOccurrencesPerChar(characters) {
+  const charOccurrences = {}
+
+  for (let i = 0; i < characters.length; i++) {
+    const char = characters[i]
+
+    if (isWhiteSpace(char)) {
+      continue
+    }
+
+    charOccurrences[char] = charOccurrences[char] + 1 || 1
+  }
+
+  return charOccurrences
+}
+
+function isWhiteSpace(char) {
+  return /\s/.test(char)
+}
+
+function getCharWithMoreOccurrences(charOccurrences) {
+  let maxChar
+  let maxOccurrences = 0
+
+  Object.keys(charOccurrences).forEach((char) => {
+    if (charOccurrences[char] > maxOccurrences) {
+      maxChar = char
+      maxOccurrences = charOccurrences[char]
     }
   })
-  return maxCharacter
+
+  return maxChar
 }
 
 export { maxCharacter }
