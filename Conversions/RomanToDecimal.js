@@ -1,4 +1,4 @@
-const values = {
+const romanValues = {
   I: 1,
   V: 5,
   X: 10,
@@ -8,31 +8,31 @@ const values = {
   M: 1000
 }
 
-function romanToDecimal (romanNumber) {
-  let prev = ' '
+function convertRomanToDecimal (romanNumber) {
+  let previousRoman = ' '
+  let decimalNumber = 0
+  let newPreviousRoman = 0
 
-  let sum = 0
-
-  let newPrev = 0
   for (let i = romanNumber.length - 1; i >= 0; i--) {
     const c = romanNumber.charAt(i)
 
-    if (prev !== ' ') {
-      newPrev = values[prev] > newPrev ? values[prev] : newPrev
+    if (previousRoman !== ' ') {
+      newPreviousRoman = romanValues[previousRoman] > newPreviousRoman ? romanValues[previousRoman] : newPreviousRoman
     }
 
-    const currentNum = values[c]
-    if (currentNum >= newPrev) {
-      sum += currentNum
+    const currentNum = romanValues[c]
+    if (currentNum >= newPreviousRoman) {
+      decimalNumber += currentNum
     } else {
-      sum -= currentNum
+      decimalNumber -= currentNum
     }
 
-    prev = c
+    previousRoman = c
+
   }
-  return sum
+  return decimalNumber
 }
 
-console.log(romanToDecimal('XXIIVV'))
-console.log(romanToDecimal('MDCCCIV'))
-console.log(romanToDecimal('XXIVI'))
+console.log(convertRomanToDecimal('XXIIVV'))
+console.log(convertRomanToDecimal('MDCCCIV'))
+console.log(convertRomanToDecimal('XXIVI'))
