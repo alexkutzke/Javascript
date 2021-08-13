@@ -1,24 +1,24 @@
+require('dotenv/config')
 const fetch = require('node-fetch')
 
-const APPID = '' // <-- Put your OpenWeatherMap appid here!
+const APP_ID = process.env.API_KEY
 const URL_BASE = 'http://api.openweathermap.org/data/2.5/'
 
-async function currentWeather (location) {
-  const response = await fetch(`${URL_BASE}weather?q=${location}&appid=${APPID}`)
-  const data = await response.json()
-  return data
+function currentWeather (location) {
+  return callOpenWeatherApi(`${URL_BASE}weather?q=${location}&appid=${APP_ID}`)
 }
 
-async function weatherForecast (location) {
-  const response = await fetch(`${URL_BASE}forecast?q=${location}&appid=${APPID}`)
-  const data = await response.json()
-  return data
+function weatherForecast (location) {
+  return callOpenWeatherApi(`${URL_BASE}forecast?q=${location}&appid=${APP_ID}`)
 }
 
-async function oneCallApi (latitude, longitude) {
-  const response = await fetch(`${URL_BASE}onecall?lat=${latitude}&lon=${longitude}&appid=${APPID}`)
-  const data = await response.json()
-  return data
+function oneCallApi (latitude, longitude) {
+  return callOpenWeatherApi(`${URL_BASE}onecall?lat=${latitude}&lon=${longitude}&appid=${APP_ID}`)
+}
+
+async function callOpenWeatherApi(url) {
+  const response = await fetch(url)
+  return await response.json()
 }
 
 currentWeather('Kolkata')
