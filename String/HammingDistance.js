@@ -10,20 +10,20 @@
  */
 
 /**
- * @param {string} a
- * @param {string} b
+ * @param {string} firstString 
+ * @param {string} secondString
  * @return {number}
  */
 
-export const hammingDistance = (a, b) => {
-  if (a.length !== b.length) {
+ export const hammingDistance = (firstString, secondString) => {
+  if (firstString.length !== secondString.length) {
     throw new Error('Strings must be of the same length')
   }
 
   let distance = 0
 
-  for (let i = 0; i < a.length; i += 1) {
-    if (a[i] !== b[i]) {
+  for (let stringIndex = 0; stringIndex < firstString.length; stringIndex += 1) {
+    if (firstString[stringIndex] !== secondString[stringIndex]) {
       distance += 1
     }
   }
