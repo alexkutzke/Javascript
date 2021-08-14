@@ -33,21 +33,60 @@
 /*
 *  Using 2 for loops
 */
-function bubbleSort (items) {
-  const length = items.length
 
-  for (let i = (length - 1); i > 0; i--) {
-    // Number of passes
-    for (let j = (length - i); j > 0; j--) {
-      // Compare the adjacent positions
-      if (items[j] < items[j - 1]) {
-        // Swap the numbers
-        [items[j], items[j - 1]] = [items[j - 1], items[j]]
+
+class BubbleSort {
+
+  /*
+  * @param [array] elements which will be sorted
+  */
+  constructor(elements) {
+    this.elements = elements;
+    this.length = this.elements.length;
+  }
+
+  /*
+  * Sort a array with integer elements.
+  * @return [array] sorted list.
+  */
+  sort(){
+    for(let iteration = this.length - 1; iteration >= 0; iteration--) {
+      const limitIndex = this.length - iteration;
+      this.sortElement(limitIndex);
+    }
+    return this.elements;
+  }
+
+  /*
+  * Check if element on received index is bigger than adjacent element.
+  * @param currentIndex [number] index used as based
+  * @return [boolen] true if element on received index is bigger than next element, otherwise returns false.
+  */
+  biggerThanNextValue(currentIndex){
+    return this.elements[currentIndex] > this.elements[currentIndex + 1];
+  }
+
+  /*
+  * Swich two elements based on a index, replace element on received index for adjacent.
+  * @param index [number] index used as reference
+  */
+  switchElements(index){
+    const temp = this.elements[index];
+    this.elements[index] = this.elements[index + 1];
+    this.elements[index + 1] = temp;
+  }
+
+  /*
+  * Sort a single element, always set current bigger element on correct position.
+  * @param limitIndex [number] define until which element should be considered.
+  */
+  sortElement(limitIndex){
+    for(let currentIndex = 0; currentIndex < limitIndex; currentIndex++){
+      if(this.biggerThanNextValue(currentIndex)){
+        this.switchElements(currentIndex);
       }
     }
   }
-
-  return items
 }
 
 /*
@@ -59,7 +98,7 @@ console.log('\n- Before Sort | Implementation using 2 for loops -')
 console.log(array1)
 // After Sort
 console.log('- After Sort | Implementation using 2 for loops -')
-console.log(bubbleSort(array1))
+console.log(new BubbleSort(array1).sort())
 console.log('\n')
 
 /*
