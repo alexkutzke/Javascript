@@ -7,19 +7,19 @@ module.exports = class Weather {
   }
 
   async currentWeather (location) {
-    const response = await fetch(`${URL_BASE}weather?q=${location}&appid=${APPID}`)
+    const response = await fetch(`${this.URL_BASE}weather?q=${location}&appid=${this.APPID}`)
     const data = await response.json()
     return data
   }
 
   async weatherForecast (location) {
-    const response = await fetch(`${URL_BASE}forecast?q=${location}&appid=${APPID}`)
+    const response = await fetch(`${this.URL_BASE}forecast?q=${location}&appid=${this.APPID}`)
     const data = await response.json()
     return data
   }
 
   async weatherByCordinates (latitude, longitude) {
-    const response = await fetch(`${URL_BASE}onecall?lat=${latitude}&lon=${longitude}&appid=${APPID}`)
+    const response = await fetch(`${this.URL_BASE}onecall?lat=${latitude}&lon=${longitude}&appid=${this.APPID}`)
     const data = await response.json()
     return data
   }
