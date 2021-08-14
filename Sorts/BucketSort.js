@@ -11,54 +11,89 @@ Time Complexity of Solution:
 Best Case O(n); Average Case O(n); Worst Case O(n)
 
 */
-function bucketSort (list, size) {
-  if (undefined === size) {
-    size = 5
-  }
-  if (list.length === 0) {
-    return list
-  }
-  let min = list[0]
-  let max = list[0]
-  // find min and max
-  for (let iList = 0; iList < list.length; iList++) {
-    if (list[iList] < min) {
-      min = list[iList]
-    } else if (list[iList] > max) {
-      max = list[iList]
-    }
-  }
-  // how many buckets we need
-  const count = Math.floor((max - min) / size) + 1
 
-  // create buckets
-  const buckets = []
-  for (let iCount = 0; iCount < count; iCount++) {
-    buckets.push([])
+class BucketSort {
+  valueMaximum;
+  valueMinimum;
+  arrayDisordered;
+
+  constructor(arrayDisordered) {
+    this.arrayDisordered = arrayDisordered;
   }
 
-  // bucket fill
-  for (let iBucket = 0; iBucket < list.length; iBucket++) {
-    const key = Math.floor((list[iBucket] - min) / size)
-    buckets[key].push(list[iBucket])
+  sorting(size) {
+    const sizeBucket = this.checkSizeBucket(size);
+
+    if (this.arrayDisordered.length === 0) {
+      return this.arrayDisordered;
+    }
+
+    this.valueMinimum = this.arrayDisordered[0];
+    this.valueMaximum = this.arrayDisordered[0];
+
+    this.findValueMinumumAndValueMaximum();
+
+    const bucketsNeeded = this.checkBucketsNeeded(sizeBucket);
+    const buckets = this.createBuckets(bucketsNeeded);
+    const bucketFilled = this.bucketFill(buckets, sizeBucket);
+    const arrayOrdered = this.orderBucketSort(bucketFilled);
+    return arrayOrdered;
   }
-  const sorted = []
-  // now sort every bucket and merge it to the sorted list
-  for (let iBucket = 0; iBucket < buckets.length; iBucket++) {
-    const arr = buckets[iBucket].sort()
-    for (let iSorted = 0; iSorted < arr.length; iSorted++) {
-      sorted.push(arr[iSorted])
+
+  bucketFill(buckets, sizeBucket) {
+    for (let index = 0; index < this.arrayDisordered.length; index++) {
+      const key = Math.floor(
+        (this.arrayDisordered[index] - this.valueMinimum) / sizeBucket
+      );
+      buckets[key].push(this.arrayDisordered[index]);
+    }
+    return buckets;
+  }
+
+  createBuckets(bucketsNeeded) {
+    const buckets = [];
+    for (let count = 0; count < bucketsNeeded; count++) {
+      buckets.push([]);
+    }
+    return buckets;
+  }
+
+  checkBucketsNeeded(sizeBucket) {
+    return Math.floor((this.valueMaximum - this.valueMinimum) / sizeBucket) + 1;
+  }
+
+  findValueMinumumAndValueMaximum() {
+    for (let index = 0; index < this.arrayDisordered.length; index++) {
+      if (this.arrayDisordered[index] < this.valueMinimum) {
+        this.valueMinimum = this.arrayDisordered[index];
+      } else if (this.arrayDisordered[index] > this.valueMaximum) {
+        this.valueMaximum = this.arrayDisordered[index];
+      }
     }
   }
-  return sorted
+
+  checkSizeBucket(sizeBucket) {
+    if (undefined === sizeBucket) {
+      return 5;
+    }
+    return sizeBucket;
+  }
+
+  orderBucketSort(buckets) {
+    const bucketsSorted = [];
+    for (let iBucket = 0; iBucket < buckets.length; iBucket++) {
+      const arr = buckets[iBucket].sort();
+      for (let iSorted = 0; iSorted < arr.length; iSorted++) {
+        bucketsSorted.push(arr[iSorted]);
+      }
+    }
+    return bucketsSorted;
+  }
 }
 
-// Testing
-const arrOrignal = [5, 6, 7, 8, 1, 2, 12, 14]
-// > bucketSort(arrOrignal)
-// [1, 2, 5, 6, 7, 8, 12, 14]
-// Array before Sort
-console.log(arrOrignal)
-const arrSorted = bucketSort(arrOrignal)
-// Array after sort
-console.log(arrSorted)
+const arrayBeforeOrdination = [5, 6, 7, 8, 1, 2, 12, 14];
+console.log(arrayBeforeOrdination);
+
+const bucketSort = new BucketSort(arrayBeforeOrdination);
+const arrayAfterOrdination = bucketSort.sorting();
+console.log(arrayAfterOrdination);
