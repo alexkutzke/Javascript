@@ -16,9 +16,7 @@
  */
 
  export const hammingDistance = (firstString, secondString) => {
-  if (firstString.length !== secondString.length) {
-    throw new Error('Strings must be of the same length')
-  }
+  stringLengthChecker(firstString, secondString);
 
   let distance = 0
 
@@ -27,6 +25,10 @@
       distance += 1
     }
   }
+}
 
-  return distance
+function stringLengthChecker(stringA, stringB){
+  if (stringA.length !== stringB.length) {
+    return ('Strings must be of the same length');
+  }
 }
