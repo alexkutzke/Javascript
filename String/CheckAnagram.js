@@ -1,3 +1,5 @@
+/* Refactored by Rodrigo Augusto Silva Acevedo */
+
 // Anagram check is case sensitive; i.e. Aba and aba is not a anagram.
 // inputs are strings i.e. str1 and str2
 const checkAnagram = (string1, string2) => {
