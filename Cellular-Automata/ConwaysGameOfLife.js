@@ -9,53 +9,83 @@ The Game of Life is a cellular automaton devised by the British mathematician Jo
 */
 
 /*
-*  Doctests
-*
-*  > newGeneration([[0, 1, 0], [0, 1, 0], [0, 1, 0]])
-*  [ [ 0, 0, 0 ], [ 1, 1, 1 ], [ 0, 0, 0 ] ]
-*/
+ *  Doctests
+ *
+ *  > newGeneration([[0, 1, 0], [0, 1, 0], [0, 1, 0]])
+ *  [ [ 0, 0, 0 ], [ 1, 1, 1 ], [ 0, 0, 0 ] ]
+ */
 
 /*
-*  Generates the next generation for a given state of Conway's Game of Life.
-*/
-function newGeneration (cells) {
+ *  Generates the next generation for a given state of Conway's Game of Life.
+ */
+function nextGenerationCells(cells) {
   const nextGeneration = []
   for (let i = 0; i < cells.length; i++) {
-    const nextGenerationRow = []
+    const nextGenerationRow = [];
     for (let j = 0; j < cells[i].length; j++) {
-      // Get the number of living neighbours
-      let neighbourCount = 0
-      if (i > 0 && j > 0) neighbourCount += cells[i - 1][j - 1]
-      if (i > 0) neighbourCount += cells[i - 1][j]
-      if (i > 0 && j < cells[i].length - 1) neighbourCount += cells[i - 1][j + 1]
-      if (j > 0) neighbourCount += cells[i][j - 1]
-      if (j < cells[i].length - 1) neighbourCount += cells[i][j + 1]
-      if (i < cells.length - 1 && j > 0) neighbourCount += cells[i + 1][j - 1]
-      if (i < cells.length - 1) neighbourCount += cells[i + 1][j]
-      if (i < cells.length - 1 && j < cells[i].length - 1) neighbourCount += cells[i + 1][j + 1]
 
-      // Decide whether the cell is alive or dead
-      const alive = cells[i][j] === 1
-      if ((alive && neighbourCount >= 2 && neighbourCount <= 3) || (!alive && neighbourCount === 3)) {
-        nextGenerationRow.push(1)
-      } else {
-        nextGenerationRow.push(0)
-      }
+      neighbourCount = getNumberOfLivingNeighbours(cells, i, j);
+
+      const alive = cells[i][j] === 1;
+      deadOrAlive = decideCellIsAliveOrDead(alive, neighbourCount);
+      nextGenerationRow.push(deadOrAlive)
     }
     nextGeneration.push(nextGenerationRow)
   }
   return nextGeneration
 }
 
+function getNumberOfLivingNeighbours(cells, i, j) {
+  let neighbourCount = 0
+  if (i > 0) {
+    neighbourCount += livingNeighboursOnPreviousRow(cells, i - 1, j)
+  }
+  neighbourCount += livingNeighboursOnSameRow(cells, i, j)
+
+  if (i < cells.length - 1) {
+    neighbourCount += livingNeighboursOnNextRow(cells, i + 1, j)
+  }
+  return neighbourCount
+}
+
+function livingNeighboursOnSameRow(cells, sameRow, currentColumn) {
+  let neighbourCount = 0
+  if (currentColumn > 0) neighbourCount += cells[sameRow][currentColumn - 1]
+  if (currentColumn < cells[sameRow].length - 1) neighbourCount += cells[sameRow][currentColumn + 1]
+  return neighbourCount;
+}
+
+function livingNeighboursOnPreviousRow(cells, previousRow, currentColumn) {
+  let neighbourCount = 0
+  neighbourCount += cells[previousRow][currentColumn]
+  if (currentColumn > 0) neighbourCount += cells[previousRow][currentColumn - 1]
+  if (currentColumn < cells[previousRow].length - 1) neighbourCount += cells[previousRow][currentColumn + 1]
+  return neighbourCount;
+}
+
+function livingNeighboursOnNextRow(cells, nextRow, currentColumn) {
+  let neighbourCount = 0
+  neighbourCount += cells[nextRow][currentColumn]
+  if (currentColumn > 0) neighbourCount += cells[nextRow][currentColumn - 1]
+  if (currentColumn < cells[nextRow].length - 1) neighbourCount += cells[nextRow][currentColumn + 1]
+  return neighbourCount;
+}
+
+function decideCellIsAliveOrDead(alive, neighbourCount) {
+  if ((alive && neighbourCount >= 2 && neighbourCount <= 3) || (!alive && neighbourCount === 3)) {
+    return 1
+  }
+  return 0
+}
+
 /*
-*  utility function to display a series of generations in the console
-*/
-async function animate (cells, steps) {
+ *  utility function to display a series of generations in the console
+ */
+async function animate(cells, steps) {
   /*
-  * utility function to print one frame
-  */
-  function printCells (cells) {
-    console.clear()
+   * utility function to print one frame
+   */
+  function printCells(cells) {
     for (let i = 0; i < cells.length; i++) {
       let line = ''
       for (let j = 0; j < cells[i].length; j++) {
@@ -70,7 +100,7 @@ async function animate (cells, steps) {
 
   for (let i = 0; i < steps; i++) {
     await new Promise(resolve => setTimeout(resolve, 250)) // sleep
-    cells = newGeneration(cells)
+    cells = nextGenerationCells(cells)
     printCells(cells)
   }
 }
