@@ -25,6 +25,8 @@
       distance += 1
     }
   }
+
+  return distance
 }
 
 function stringLengthChecker(stringA, stringB){
