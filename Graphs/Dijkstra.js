@@ -6,49 +6,51 @@
  * It uses graph data structure.
  */
 
-function createGraph (V, E) {
-  // V - Number of vertices in graph
-  // E - Number of edges in graph (u,v,w)
-  const adjList = [] // Adjacency list
-  for (let i = 0; i < V; i++) {
-    adjList.push([])
+function createGraph(vertices, edges) {
+  // vertices - Number of vertices in graph
+  // edges - Number of edges in graph (u,v,w)
+  const minimumDistance = []; // Adjacency list
+  for (let i = 0; i < vertices; i++) {
+    minimumDistance.push([]);
   }
-  for (let i = 0; i < E.length; i++) {
-    adjList[E[i][0]].push([E[i][1], E[i][2]])
-    adjList[E[i][1]].push([E[i][0], E[i][2]])
+  for (let i = 0; i < edges.length; i++) {
+    minimumDistance[edges[i][0]].push([edges[i][1], edges[i][2]]);
+    minimumDistance[edges[i][1]].push([edges[i][0], edges[i][2]]);
   }
-  return adjList
+  return minimumDistance;
 }
 
-function djikstra (graph, V, src) {
-  const vis = Array(V).fill(0)
-  const dist = []
-  for (let i = 0; i < V; i++) dist.push([10000, -1])
-  dist[src][0] = 0
+function parentNode(graph, vertices, src) {
+  const verticesArray = Array(vertices).fill(0);
+  const distanceFromNode = [];
+  for (let i = 0; i < vertices; i++){
+   distanceFromNode.push([10000, -1]);
+  }
+  distanceFromNode[src][0] = 0;
 
-  for (let i = 0; i < V - 1; i++) {
-    let mn = -1
-    for (let j = 0; j < V; j++) {
-      if (vis[j] === 0) {
-        if (mn === -1 || dist[j][0] < dist[mn][0]) mn = j
+  for (let i = 0; i < vertices - 1; i++) {
+    let minimum = -1;
+    for (let j = 0; j < vertices; j++) {
+      if (verticesArray[j] === 0) {
+        if (minimum === -1 || distanceFromNode[j][0] < distanceFromNode[minimum][0]) minimum = j;
       }
     }
 
-    vis[mn] = 1
-    for (let j = 0; j < graph[mn].length; j++) {
-      const edge = graph[mn][j]
-      if (vis[edge[0]] === 0 && dist[edge[0]][0] > dist[mn][0] + edge[1]) {
-        dist[edge[0]][0] = dist[mn][0] + edge[1]
-        dist[edge[0]][1] = mn
+    verticesArray[minimum] = 1;
+    for (let j = 0; j < graph[minimum].length; j++) {
+      const edge = graph[minimum][j];
+      if (verticesArray[edge[0]] === 0 && distanceFromNode[edge[0]][0] > distanceFromNode[minimum][0] + edge[1]) {
+        distanceFromNode[edge[0]][0] = distanceFromNode[minimum][0] + edge[1];
+        distanceFromNode[edge[0]][1] = minimum;
       }
     }
   }
 
-  return dist
+  return distanceFromNode;
 }
 
-const V = 9
-const E = [
+const vertices = 9;
+const edges = [
   [0, 1, 4],
   [0, 7, 8],
   [1, 7, 11],
@@ -62,12 +64,11 @@ const E = [
   [2, 3, 7],
   [3, 5, 14],
   [3, 4, 9],
-  [4, 5, 10]
-]
+  [4, 5, 10],
+];
 
-const graph = createGraph(V, E)
-const distances = djikstra(graph, V, 0)
-
+const graph = createGraph(vertices, edges);
+const distances = parentNode(graph, vertices, 0);
 /**
  * The first value in the array determines the minimum distance and the
  * second value represents the parent node from which the minimum distance has been calculated
