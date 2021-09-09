@@ -3,29 +3,29 @@ const fetch = require('node-fetch')
 const APPID = '' // <-- Put your OpenWeatherMap appid here!
 const URL_BASE = 'http://api.openweathermap.org/data/2.5/'
 
-async function currentWeather (location) {
-  const response = await fetch(`${URL_BASE}weather?q=${location}&appid=${APPID}`)
-  const data = await response.json()
-  return data
+async function currentWeatherIn (location) {
+  const currentWeatherInLocation = await fetch(`${URL_BASE}weather?q=${location}&appid=${APPID}`)
+  const currentWeatherInLocationJson = await currentWeatherInLocation.json()
+  return currentWeatherInLocationJson
 }
 
-async function weatherForecast (location) {
-  const response = await fetch(`${URL_BASE}forecast?q=${location}&appid=${APPID}`)
-  const data = await response.json()
-  return data
+async function weatherForecastIn (location) {
+  const weatherForecastInLocation = await fetch(`${URL_BASE}forecast?q=${location}&appid=${APPID}`)
+  const weatherForecastInLocationJson = await weatherForecastInLocation.json()
+  return weatherForecastInLocationJson
 }
 
-async function oneCallApi (latitude, longitude) {
-  const response = await fetch(`${URL_BASE}onecall?lat=${latitude}&lon=${longitude}&appid=${APPID}`)
-  const data = await response.json()
-  return data
+async function oneCallApiLocationWith (latitude, longitude) {
+  const apiLocation = await fetch(`${URL_BASE}onecall?lat=${latitude}&lon=${longitude}&appid=${APPID}`)
+  const apiLocationJson = await apiLocation.json()
+  return apiLocationJson
 }
 
-currentWeather('Kolkata')
-  .then(data => console.log(data))
+currentWeatherIn('Curitiba')
+  .then(currentWeather => console.log(currentWeather))
 
-weatherForecast('Kolkata')
-  .then(data => console.log(data))
+weatherForecastIn('Curitiba')
+  .then(weatherForecast => console.log(weatherForecast))
 
-oneCallApi(55.68, 12.57)
-  .then(data => console.log(data))
+oneCallApiLocationWith(-25.42, -49.27)
+  .then(apiLocation => console.log(apiLocation))
