@@ -1,44 +1,44 @@
 // Anagram check is case sensitive; i.e. Aba and aba is not a anagram.
-// inputs are strings i.e. str1 and str2
-const checkAnagram = (str1, str2) => {
-  // check that inputs are strings.
-  if (typeof str1 !== 'string' || typeof str2 !== 'string') {
-    return 'Not string(s)'
+// inputs are strings i.e. string1 and string2
+const checkAnagram = (string1, string2) => {
+
+  function is_string(string1, string2) {
+    if (typeof string1 !== 'string' || typeof string2 !== 'string') {
+      return 'Not string(s)'
+    }
   }
 
-  // If both strings have not same lengths then they can not be anagram.
-  if (str1.length !== str2.length) {
+function is_anagrama(string1, string2) {
+  if (string1.length !== string2.length) {
     return 'Not anagrams'
   }
+}
 
-  // Use hashmap to keep count of characters in str1
+  const string1CharCount = new Map()
 
-  const str1CharCount = new Map()
-
-  for (let i = 0; i < str1.length; i++) {
+  for (let i = 0; i < string1.length; i++) {
     let previousCount = 0
-    if (str1CharCount.has(str1[i])) {
-      previousCount = str1CharCount.get(str1[i])
+    if (string1CharCount.has(string1[i])) {
+      previousCount = string1CharCount.get(string1[i])
     }
-    str1CharCount.set(str1[i], previousCount + 1)
+    string1CharCount.set(string1[i], previousCount + 1)
   }
 
-  // Now check if second string has same characters?
-
-  for (let i = 0; i < str2.length; i++) {
+  for (let i = 0; i < string2.length; i++) {
     let previousCount = 0
-    // if str1CharCount has no key for str2[i] then not anagram.
-    if (!str1CharCount.has(str2[i])) {
-      return 'Not anagrams'
+
+    function no_anagrama(string2) {
+      if (!string1CharCount.has(string2[i])) {
+        return 'Not anagrams'
+      }
     }
-    previousCount = str1CharCount.get(str2[i])
-    str1CharCount.set(str2[i], previousCount - 1)
+
+    previousCount = string1CharCount.get(string2[i])
+    string1CharCount.set(string2[i], previousCount - 1)
   }
 
-  // Now check if all entries in hashmap has zeros.
-
-  for (const key in str1CharCount) {
-    if (str1CharCount[key] !== 0) { return 'Not anagrams' }
+  for (const key in string1CharCount) {
+    if (string1CharCount[key] !== 0) { return 'Not anagrams' }
   }
 
   return 'Anagrams'
