@@ -6,23 +6,24 @@
  * subtract 13 from the character code value.
  */
 
-/**
- * Decrypt a ROT13 cipher
- * @param {String} str - string to be decrypted
- * @return {String} decrypted string
- */
+const A = 65;
+const M = 77;
+const Z = 90;
+const a = 97;
+const m = 109;
+const z = 122;
  
 function isSpecialCharacter(char) {
-  return char < 'A' || (char > 'Z' && char < 'a') || char > 'z';
+  return (char < A || (char > Z && char < a) || char > z);
 }
 
 function isGreaterThanM(char) {
-  return (char > 77 && char <= 90) || (char > 109 && char <= 122)
+  return (char > M && char <= Z) || (char > m && char <= 122)
 }
 
 function rotated(char) {
 	if (isSpecialCharacter(char)) {
-      return char;
+      return String.fromCharCode(char);
   } else if (isGreaterThanM(char)) {
     	return String.fromCharCode(char - 13);
   } else {
@@ -30,6 +31,11 @@ function rotated(char) {
   }
 }
 
+/**
+ * Decrypt a ROT13 cipher
+ * @param {String} str - string to be decrypted
+ * @return {String} decrypted string
+ */
 function rot13(str) {
   const response = [];
   const strLength = str.length;
