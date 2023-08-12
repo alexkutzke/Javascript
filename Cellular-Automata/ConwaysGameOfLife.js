@@ -11,31 +11,38 @@ The Game of Life is a cellular automaton devised by the British mathematician Jo
 /**
  * Generates the next generation for a given state of Conway's Game of Life.
  */
-export function newGeneration (cells) {
-  const nextGeneration = []
-  for (let i = 0; i < cells.length; i++) {
-    const nextGenerationRow = []
-    for (let j = 0; j < cells[i].length; j++) {
-      // Get the number of living neighbours
-      let neighbourCount = 0
-      if (i > 0 && j > 0) neighbourCount += cells[i - 1][j - 1]
-      if (i > 0) neighbourCount += cells[i - 1][j]
-      if (i > 0 && j < cells[i].length - 1) neighbourCount += cells[i - 1][j + 1]
-      if (j > 0) neighbourCount += cells[i][j - 1]
-      if (j < cells[i].length - 1) neighbourCount += cells[i][j + 1]
-      if (i < cells.length - 1 && j > 0) neighbourCount += cells[i + 1][j - 1]
-      if (i < cells.length - 1) neighbourCount += cells[i + 1][j]
-      if (i < cells.length - 1 && j < cells[i].length - 1) neighbourCount += cells[i + 1][j + 1]
+export function newGeneration(cells) {
+  const numRows = cells.length;
+  const numCols = cells[0].length;
+  
+  const getNextCellValue = (row, col) => {
+    const isInsideGrid = (r, c) => r >= 0 && r < numRows && c >= 0 && c < numCols;
+    const getNeighborValue = (r, c) => isInsideGrid(r, c) ? cells[r][c] : 0;
 
-      // Decide whether the cell is alive or dead
-      const alive = cells[i][j] === 1
-      if ((alive && neighbourCount >= 2 && neighbourCount <= 3) || (!alive && neighbourCount === 3)) {
-        nextGenerationRow.push(1)
-      } else {
-        nextGenerationRow.push(0)
-      }
+    const neighbors = [
+      getNeighborValue(row - 1, col - 1), getNeighborValue(row - 1, col), getNeighborValue(row - 1, col + 1),
+      getNeighborValue(row, col - 1),                                      getNeighborValue(row, col + 1),
+      getNeighborValue(row + 1, col - 1), getNeighborValue(row + 1, col), getNeighborValue(row + 1, col + 1),
+    ];
+    
+    const aliveNeighbors = neighbors.reduce((acc, neighbor) => acc + neighbor, 0);
+    const isAlive = cells[row][col] === 1;
+
+    if ((isAlive && aliveNeighbors >= 2 && aliveNeighbors <= 3) || (!isAlive && aliveNeighbors === 3)) {
+      return 1;
+    } else {
+      return 0;
     }
-    nextGeneration.push(nextGenerationRow)
+  };
+
+  const nextGeneration = [];
+  for (let i = 0; i < numRows; i++) {
+    const nextGenerationRow = [];
+    for (let j = 0; j < numCols; j++) {
+      nextGenerationRow.push(getNextCellValue(i, j));
+    }
+    nextGeneration.push(nextGenerationRow);
   }
-  return nextGeneration
+  
+  return nextGeneration;
 }
