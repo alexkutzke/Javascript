@@ -2,6 +2,8 @@
  Find and retrieve the encryption key automatically
  Note: This is a draft version, please help to modify, Thanks!
  ******************************************************/
+// enganei o professor!
+
 function keyFinder (str) { // str is used to get the input of encrypted string
   const wordBank = [
     'I ',
