@@ -84,7 +84,7 @@ function getLastDigit (number) {
 }
 
 function removeLastDigit (number) {
-  return Math.floor (number / 10)
+  return Math.floor(number / 10)
 }
 
 export { sumOfDigitsUsingRecursion, sumOfDigitsUsingLoop, sumOfDigitsUsingString }
