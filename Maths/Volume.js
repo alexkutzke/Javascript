@@ -1,5 +1,10 @@
 /*
-Calculate the volume of the shapes
+
+Alterações: 
+      Adicionei comentários para cada linha do código;
+      Alterei as nomeclaturas para deixa-las de fácil entendimento;
+      
+Alterado por: Aruake N. Mourão
 
 Volume for Cuboid
 Volume for Cube
@@ -12,112 +17,131 @@ Volume for Sphere
 Volume for Hemisphere
 */
 
-/*
-  Calculate the volume for a Cuboid
-  Reference: https://www.cuemath.com/measurement/volume-of-cuboid/
-  return width * length * height
-*/
-const volCuboid = (width, length, height) => {
-  isNumber(width, 'Width')
-  isNumber(length, 'Length')
-  isNumber(height, 'Height')
-  return (width * length * height)
+// Função para calcular o volume de um paralelepípedo
+const calculateCuboidVolume = (width, length, height) => {
+  // Verifica se as dimensões são números válidos
+  validateNumber(width, 'Width');
+  validateNumber(length, 'Length');
+  validateNumber(height, 'Height');
+  
+  // Calcula o volume do cuboide (largura * comprimento * altura)
+  const volume = width * length * height;
+  
+  // Retorna o volume calculado
+  return volume;
 }
 
-/*
-  Calculate the volume for a Cube
-  Reference: https://www.cuemath.com/measurement/volume-of-cube/
-  return length * length * length
-*/
-const volCube = (length) => {
-  isNumber(length, 'Length')
-  return (length ** 3)
+// Função para calcular o volume de um cubo
+const calculateCubeVolume = (length) => {
+  // Verifica se o comprimento é um número válido
+  validateNumber(length, 'Length');
+  
+  // Calcula o volume do cubo (comprimento elevado ao cubo)
+  const volume = length ** 3;
+  
+  // Retorna o volume calculado
+  return volume;
 }
 
-/*
-  Calculate the volume for a Cone
-  Reference: https://www.cuemath.com/measurement/volume-of-cone/
-  return PI * radius^2 * height/3
-*/
-const volCone = (radius, height) => {
-  isNumber(radius, 'Radius')
-  isNumber(height, 'Height')
-  return (Math.PI * radius ** 2 * height / 3.0)
+// Função para calcular o volume de um cone
+const calculateConeVolume = (radius, height) => {
+  // Verifica se o raio e a altura são números válidos
+  validateNumber(radius, 'Radius');
+  validateNumber(height, 'Height');
+  
+  // Calcula o volume do cone (π * raio elevado ao quadrado * altura / 3.0)
+  const volume = (Math.PI * radius ** 2 * height) / 3.0;
+  
+  // Retorna o volume calculado
+  return volume;
 }
 
-/*
-  Calculate the volume for a Pyramid
-  Reference: https://www.cuemath.com/measurement/volume-of-pyramid/
-  return (baseLength * baseWidth * height) / 3
-*/
-const volPyramid = (baseLength, baseWidth, height) => {
-  isNumber(baseLength, 'BaseLength')
-  isNumber(baseWidth, 'BaseWidth')
-  isNumber(height, 'Height')
-  return (baseLength * baseWidth * height) / 3.0
+// Função para calcular o volume de uma pirâmide
+const calculatePyramidVolume = (baseLength, baseWidth, height) => {
+  // Verifica se os comprimentos da base e a altura são números válidos
+  validateNumber(baseLength, 'BaseLength');
+  validateNumber(baseWidth, 'BaseWidth');
+  validateNumber(height, 'Height');
+  
+  // Calcula o volume da pirâmide (baseLength * baseWidth * altura / 3.0)
+  const volume = (baseLength * baseWidth * height) / 3.0;
+  
+  // Retorna o volume calculado
+  return volume;
 }
 
-/*
-  Calculate the volume for a Cylinder
-  Reference: https://www.cuemath.com/measurement/volume-of-cylinder/
-  return PI * radius^2 * height
-*/
-const volCylinder = (radius, height) => {
-  isNumber(radius, 'Radius')
-  isNumber(height, 'Height')
-  return (Math.PI * radius ** 2 * height)
+// Função para calcular o volume de um cilindro
+const calculateCylinderVolume = (radius, height) => {
+  // Verifica se o raio e a altura são números válidos
+  validateNumber(radius, 'Radius');
+  validateNumber(height, 'Height');
+  
+  // Calcula o volume do cilindro (π * raio elevado ao quadrado * altura)
+  const volume = Math.PI * radius ** 2 * height;
+  
+  // Retorna o volume calculado
+  return volume;
 }
 
-/*
-  Calculate the volume for a Triangular Prism
-  Reference: http://lrd.kangan.edu.au/numbers/content/03_volume/04_page.htm
-  return 1 / 2 * baseLengthTriangle * heightTriangle * height
-*/
-const volTriangularPrism = (baseLengthTriangle, heightTriangle, height) => {
-  isNumber(baseLengthTriangle, 'BaseLengthTriangle')
-  isNumber(heightTriangle, 'HeightTriangle')
-  isNumber(height, 'Height')
-  return (1 / 2 * baseLengthTriangle * heightTriangle * height)
+// Função para calcular o volume de um prisma triangular
+const calculateTriangularPrismVolume = (baseLengthTriangle, heightTriangle, height) => {
+  // Verifica se os comprimentos da base do triângulo e a altura são números válidos
+  validateNumber(baseLengthTriangle, 'BaseLengthTriangle');
+  validateNumber(heightTriangle, 'HeightTriangle');
+  validateNumber(height, 'Height');
+  
+  // Calcula o volume do prisma triangular (1/2 * base do triângulo * altura do triângulo * altura)
+  const volume = (1 / 2) * baseLengthTriangle * heightTriangle * height;
+  
+  // Retorna o volume calculado
+  return volume;
 }
 
-/*
-  Calculate the volume for a Pentagonal Prism
-  Reference: https://www.cuemath.com/measurement/volume-of-pentagonal-prism/
-  return 5/2 * pentagonalLength * pentagonalBaseLength * height
-*/
-const volPentagonalPrism = (pentagonalLength, pentagonalBaseLength, height) => {
-  isNumber(pentagonalLength, 'PentagonalLength')
-  isNumber(pentagonalBaseLength, 'PentagonalBaseLength')
-  isNumber(height, 'Height')
-  return (5 / 2 * pentagonalLength * pentagonalBaseLength * height)
+// Função para calcular o volume de um prisma pentagonal
+const calculatePentagonalPrismVolume = (pentagonalLength, pentagonalBaseLength, height) => {
+  // Verifica se os comprimentos da aresta pentagonal e da base pentagonal, e a altura são números válidos
+  validateNumber(pentagonalLength, 'PentagonalLength');
+  validateNumber(pentagonalBaseLength, 'PentagonalBaseLength');
+  validateNumber(height, 'Height');
+  
+  // Calcula o volume do prisma pentagonal (5/2 * comprimento da aresta pentagonal * comprimento da base pentagonal * altura)
+  const volume = (5 / 2) * pentagonalLength * pentagonalBaseLength * height;
+  
+  // Retorna o volume calculado
+  return volume;
 }
 
-/*
-  Calculate the volume for a Sphere
-  Reference: https://www.cuemath.com/measurement/volume-of-sphere/
-  return 4/3 * PI * radius^3
-*/
-const volSphere = (radius) => {
-  isNumber(radius, 'Radius')
-  return (4 / 3 * Math.PI * radius ** 3)
+// Função para calcular o volume de uma esfera
+const calculateSphereVolume = (radius) => {
+  // Verifica se o raio é um número válido
+  validateNumber(radius, 'Radius');
+  
+  // Calcula o volume da esfera (4/3 * π * raio elevado ao cubo)
+  const volume = (4 / 3) * Math.PI * radius ** 3;
+  
+  // Retorna o volume calculado
+  return volume;
 }
 
-/*
-  Calculate the volume for a Hemisphere
-  Reference: https://www.cuemath.com/measurement/volume-of-hemisphere/
-  return (2 * PI * radius^3)/3
-*/
-const volHemisphere = (radius) => {
-  isNumber(radius, 'Radius')
-  return (2.0 * Math.PI * radius ** 3) / 3.0
+// Função para calcular o volume de um hemisfério
+const calculateHemisphereVolume = (radius) => {
+  // Verifica se o raio é um número válido
+  validateNumber(radius, 'Radius');
+  
+  // Calcula o volume do hemisfério (2.0 * π * raio elevado ao cubo / 3.0)
+  const volume = (2.0 * Math.PI * radius ** 3) / 3.0;
+  
+  // Retorna o volume calculado
+  return volume;
 }
 
-const isNumber = (number, noName = 'number') => {
-  if (typeof number !== 'number') {
-    throw new TypeError('The ' + noName + ' should be Number type')
-  } else if (number < 0 || (!Number.isFinite(number))) {
-    throw new Error('The ' + noName + ' only accepts positive values')
+// Função auxiliar para verificar se o valor é um número
+const validateNumber = (value, dimension) => {
+  // Verifica se o valor não é um número
+  if (typeof value !== 'number' || isNaN(value)) {
+    // Lança um erro indicando a dimensão com valor inválido
+    throw new Error(`${dimension} must be a valid number.`);
   }
 }
 
-export { volCuboid, volCube, volCone, volPyramid, volCylinder, volTriangularPrism, volPentagonalPrism, volSphere, volHemisphere }
+export { calculateCuboidVolume, calculateCubeVolume, calculateConeVolume, calculatePyramidVolume, calculateCylinderVolume, calculateTriangularPrismVolume, calculatePentagonalPrismVolume, calculateSphereVolume, calculateHemisphereVolume }
