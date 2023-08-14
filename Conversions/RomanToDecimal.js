@@ -1,4 +1,4 @@
-const values = {
+const romanNumersValues = {
   I: 1,
   V: 5,
   X: 10,
@@ -8,27 +8,38 @@ const values = {
   M: 1000
 }
 
+let previousRomanNumber = ' '
+let decimalNumber = 0
+let newPreviousRomanNumber = 0
+
 export function romanToDecimal (romanNumber) {
-  let prev = ' '
-
-  let sum = 0
-
-  let newPrev = 0
-  for (let i = romanNumber.length - 1; i >= 0; i--) {
-    const c = romanNumber.charAt(i)
-
-    if (prev !== ' ') {
-      newPrev = values[prev] > newPrev ? values[prev] : newPrev
-    }
-
-    const currentNum = values[c]
-    if (currentNum >= newPrev) {
-      sum += currentNum
-    } else {
-      sum -= currentNum
-    }
-
-    prev = c
+  setupVariables()
+  for (let index = romanNumber.length - 1; index >= 0; index--) {
+    getCurrentNumber(romanNumber, index)
   }
-  return sum
+  return decimalNumber
+}
+
+function getCurrentNumber (romanNumber, index) {
+  const currentRomanNumber = romanNumber.charAt(index)
+
+  newPreviousRomanNumber = getNewPreviousRomanNumber(previousRomanNumber)
+
+  const currentNum = romanNumersValues[currentRomanNumber]
+  currentNum >= newPreviousRomanNumber ? decimalNumber += currentNum : decimalNumber -= currentNum
+
+  previousRomanNumber = currentRomanNumber
+}
+
+function getNewPreviousRomanNumber (previousRomanNumber) {
+  if (previousRomanNumber !== ' ') {
+    newPreviousRomanNumber = romanNumersValues[previousRomanNumber] > newPreviousRomanNumber ? romanNumersValues[previousRomanNumber] : newPreviousRomanNumber
+  }
+  return newPreviousRomanNumber
+}
+
+function setupVariables () {
+  previousRomanNumber = ' '
+  decimalNumber = 0
+  newPreviousRomanNumber = 0
 }
