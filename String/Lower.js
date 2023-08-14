@@ -7,14 +7,20 @@
  * @example lower("He_llo") => he_llo
  */
 
-const lower = (str) => {
-  if (typeof str !== 'string') {
-    throw new TypeError('Invalid Input Type')
+function lower (string) {
+  if (!stringIsValid(string)) {
+    showValidationError()
   }
 
-  return str.replace(
-    /[A-Z]/g, (char) => String.fromCharCode(char.charCodeAt() + 32)
-  )
+  return string.toLowerCase()
+}
+
+function stringIsValid (string) {
+  return typeof string === 'string'
+}
+
+function showValidationError () {
+  throw new TypeError('Invalid Input Type')
 }
 
 export default lower
