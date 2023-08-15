@@ -13,18 +13,23 @@
   NOTE: The final parseInt is just there in cases where 1 digit numbers are given, 
   since without that it would result in a String output.
 */
-function splitNumber(number) {
+var sum = 0
+var dividido = 0
+function sumOfDigitsUsingString(number) {
+  dividido = 0
   if (number <= 0) number = -number;
   if (number > 0 && number < 10) return menorDez(number);
   else if (number >= 10) return maior10(number);
 }
 
 function menorDez(number) {
-  return "0" + number.toString();
+  dividido =  "0" + number.toString();
+  return sumSplitNumber(dividido)
 }
 
 function maior10(number) {
-  return number.toString().split('');
+  dividido =  number.toString().split('');
+  return sumSplitNumber(dividido)
 }
 
 // Função para somar os dígitos de um array de strings
@@ -66,6 +71,14 @@ function sumOfDigitsUsingRecursion(number) {
   sum = (number % 10) + sumOfDigitsUsingRecursion(Math.floor(number / 10));
   return sum
 }
+
+
+export { sumOfDigitsUsingRecursion, sumOfDigitsUsingLoop, sumOfDigitsUsingString }
+function sumDigits(number) {
+  sum = (number % 10) + sumOfDigitsUsingRecursion(Math.floor(number / 10));
+  return sum
+}
+
 
 
 export { sumOfDigitsUsingRecursion, sumOfDigitsUsingLoop, sumOfDigitsUsingString }
