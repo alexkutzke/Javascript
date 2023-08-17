@@ -8,11 +8,18 @@
  */
 
 export const nextPowerOfTwo = (n) => {
-  if (n > 0 && (n & (n - 1)) === 0) return n
-  let result = 1
-  while (n > 0) {
-    result = result << 1
-    n = n >> 1
+  if (isPowerOfTwo(n)) {
+    return n
   }
+
+  let result = 1
+  while (result < n) {
+    result <<= 1
+  }
+
   return result
+}
+
+const isPowerOfTwo = (num) => {
+  return num > 0 && (num & (num - 1)) === 0
 }
