@@ -10,26 +10,31 @@
         characters.
 */
 
+const CHAR_CODE_UPPERCASE_A = 65;
+const CHAR_CODE_UPPERCASE_Z = 90;
+const UPPERCASE_TO_LOWERCASE_DISTANCE = 32;
+
 /**
  * LowerCaseConversion takes any case-style string and converts it to the lower case-style string.
- * @param {String} inputString any case style string
+ * @param {String} stringToLower any case style string
  * @returns {String} lower case string
  */
-const LowerCaseConversion = (inputString) => {
+const LowerCaseConversion = (stringToLower) => {
   // Take a string and split it into characters.
-  const newString = inputString.split('').map(char => {
+  const lowerCaseArray = stringToLower.split('').map(character => {
     // Get a character code by the use charCodeAt method.
-    const presentCharCode = char.charCodeAt()
+    const characterCode = character.charCodeAt()
     // If the character code lies between 65 to 90 it means they are in the upper case so convert it.
-    if (presentCharCode >= 65 && presentCharCode <= 90) {
+    if (characterCode >= CHAR_CODE_UPPERCASE_A && characterCode <= CHAR_CODE_UPPERCASE_Z) {
       // Convert the case by use of the above explanation.
-      return String.fromCharCode(presentCharCode + 32)
+      return String.fromCharCode(characterCode + UPPERCASE_TO_LOWERCASE_DISTANCE)
     }
     // Else return the characters without any modification.
-    return char
+    return character
   })
   // After modification, with the help of the join method, join all the characters and return them.
-  return newString.join('')
+  const lowerCaseString = lowerCaseArray.join('')
+  return lowerCaseString;
 }
 
 export { LowerCaseConversion }
