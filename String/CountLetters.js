@@ -33,7 +33,7 @@ function validateInput(string) {
 
 function validateInputString(string) {
   if (typeof string !== 'string') {
-    throw new TypeError('Input should be a string');
+    showValidationError('Input should be a string');
   }
 }
 
@@ -41,14 +41,18 @@ function validateInputSpecialCharacters(string) {
   const specialChars = /\W/g
 
   if (specialChars.test(string)) {
-    throw new TypeError('Input must not contain special characters');
+    showValidationError('Input must not contain special characters');
   }
 }
 
 function validateInputNumbers(string) {
   if (/\d/.test(string)) {
-    throw new TypeError('Input must not contain numbers');
+    showValidationError('Input must not contain numbers');
   }
+}
+
+function showValidationError(message) {
+  throw new TypeError(message);
 }
 
 console.log(countLetters("hello"));
