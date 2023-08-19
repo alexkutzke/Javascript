@@ -7,27 +7,35 @@
 */
 
 const getMonthDays = (monthNumber, year) => {
-  const the31DaysMonths = [1, 3, 5, 7, 8, 10, 12]
-  const the30DaysMonths = [4, 6, 9, 11]
+  //Array informs how many months and days are present in each one
+  const daysInMonth = {
+    1: 31,
+    2: isBisesto(year) ? 29 : 28,
+    3: 31,
+    4: 30,
+    5: 31,
+    6: 30,
+    7: 31,
+    8: 31,
+    9: 30,
+    10: 31,
+    11: 30,
+    12: 31
+  };
 
-  if (!the31DaysMonths.includes(monthNumber) && !the30DaysMonths.includes(monthNumber) &&
-    (monthNumber !== 2)
-  ) {
-    throw new TypeError('Invalid Month Number.')
+  if (monthNumber < 1 || monthNumber > 12) {
+    throw new Error('Invalid Month Number. Please insert a number between 1 and 12');
   }
 
-  if (the31DaysMonths.includes(monthNumber)) { return 31 }
+  return daysInMonth[monthNumber];
+};
 
-  if (the30DaysMonths.includes(monthNumber)) { return 30 }
-
-  // Check for Leap year
-  if (year % 4 === 0) {
-    if ((year % 100 !== 0) || (year % 100 === 0 && year % 400 === 0)) {
-      return 29
-    }
+const isBisesto = (year) => {
+  if (year % 4 !== 0) {
+    return false;
   }
-
-  return 28
-}
-
-export { getMonthDays }
+  if (year % 100 !== 0 || year % 400 === 0) {
+    return true;
+  }
+  return false;
+};
