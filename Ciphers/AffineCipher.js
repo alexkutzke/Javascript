@@ -37,6 +37,12 @@ function inverseMod (a, m) {
  * @return {Boolean} Result of the checking
  */
 function isCorrectFormat (str, a, b) {
+  validityState(str, a, b);
+
+  const existingFormat = findCharIndex(str, a, b);
+
+  existingFormat.validityState(str, a, b);
+  
   if (typeof a !== 'number' || typeof b !== 'number') {
     throw new TypeError('Coefficient a, b should be number')
   }
