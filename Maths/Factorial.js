@@ -1,37 +1,29 @@
 /*
-    author: PatOnTheBack
-    license: GPL-3.0 or later
+    author: Cauê Veiga, Renan Laureano
 
-    Modified from:
-        https://github.com/TheAlgorithms/Python/blob/master/maths/factorial_python.py
-
-    This script will find the factorial of a number provided by the user.
-
-    More about factorials:
-        https://en.wikipedia.org/wiki/factorial
+    Realizado melhorias nas sintaxes, realizado limpesa no código e elaboramos funções. 
+   
 */
+'use strict';
 
-'use strict'
+// Retorna uma matriz contendo números de 1 a num
+const generateRange = (num) => {
+  return [...Array(num).keys()].map(i => i + 1);
+};
 
-const calcRange = (num) => {
-  return [...Array(num).keys()].map(i => i + 1)
-}
-
-const calcFactorial = (num) => {
+// Calcula o fatorial de um inteiro positivo
+const calculateFactorial = (num) => {
   if (num === 0) {
-    return 1
+    return 1;
   }
   if (num < 0) {
-    throw Error('Sorry, factorial does not exist for negative numbers.')
+    throw new Error('Factorial does not exist for negative numbers.');
   }
-  if (!num) {
-    throw Error('Sorry, factorial does not exist for null or undefined numbers.')
-  }
-  if (num > 0) {
-    const range = calcRange(num)
-    const factorial = range.reduce((a, c) => a * c, 1)
-    return factorial
-  }
-}
+  
+  const range = generateRange(num);
+  const factorial = range.reduce((accumulator, currentValue) => accumulator * currentValue, 1);
+  return factorial;
+};
 
-export { calcFactorial }
+export { calculateFactorial };
+
