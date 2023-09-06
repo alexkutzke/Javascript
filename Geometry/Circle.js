@@ -1,19 +1,28 @@
-/**
- * This class represents a circle and can calculate it's perimeter and area
- * https://en.wikipedia.org/wiki/Circle
- * @constructor
- * @param {number} radius - The radius of the circle.
- */
-export default class Circle {
-  constructor (radius) {
-    this.radius = radius
+
+class Circle {
+  /**
+   * Creates a Circle instance with the given radius.
+   * @param {number} radius - The radius of the circle.
+   */
+  constructor(radius) {
+    this.radius = radius;
   }
 
-  perimeter = () => {
-    return this.radius * 2 * Math.PI
+  /**
+   * Calculates the perimeter of the circle.
+   * @returns {number} The perimeter value.
+   */
+  calculatePerimeter() {
+    return 2 * Math.PI * this.radius;
   }
 
-  area = () => {
-    return Math.pow(this.radius, 2) * Math.PI
+  /**
+   * Calculates the area of the circle.
+   * @returns {number} The area value.
+   */
+  calculateArea() {
+    return Math.PI * Math.pow(this.radius, 2);
   }
 }
+
+export default Circle;
