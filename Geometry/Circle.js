@@ -1,28 +1,13 @@
-
-class Circle {
-  /**
-   * Creates a Circle instance with the given radius.
-   * @param {number} radius - The radius of the circle.
-   */
+export default class Circle {
   constructor(radius) {
     this.radius = radius;
   }
 
-  /**
-   * Calculates the perimeter of the circle.
-   * @returns {number} The perimeter value.
-   */
   calculatePerimeter() {
-    return 2 * Math.PI * this.radius;
+    return this.radius * 2 * Math.PI;
   }
 
-  /**
-   * Calculates the area of the circle.
-   * @returns {number} The area value.
-   */
   calculateArea() {
-    return Math.PI * Math.pow(this.radius, 2);
+    return Math.pow(this.radius, 2) * Math.PI;
   }
 }
-
-export default Circle;
