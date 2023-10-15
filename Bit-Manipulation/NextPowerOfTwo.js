@@ -7,12 +7,26 @@
  *
  */
 
-export const nextPowerOfTwo = (n) => {
-  if (n > 0 && (n & (n - 1)) === 0) return n
-  let result = 1
-  while (n > 0) {
-    result = result << 1
-    n = n >> 1
+export function nextPowerOfTwo(inputNumber) {
+  if (isPowerOfTwo(inputNumber)) {
+    return inputNumber;
+  } else {
+    return calculateNextPowerOfTwo(inputNumber);
   }
-  return result
+}
+
+function isPowerOfTwo(number) {
+  return number > 0 && (number & (number - 1)) === 0;
+}
+
+function calculateNextPowerOfTwo(inputNumber) {
+  let result = 1;
+  let number = inputNumber;
+
+  while (number > 0) {
+    result = result << 1;
+    number = number >> 1;
+  }
+
+  return result;
 }
